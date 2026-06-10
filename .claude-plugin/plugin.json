@@ -1,13 +1,13 @@
 {
-  "name": "developersDevelopers",
-  "description": "Lean, opinionated workflow plugin for Claude Code. Replaces obra/superpowers with confirm-only-when-ambiguous routing.",
-  "version": "0.1.7",
+  "name": "developersDevelopers-verkada",
+  "description": "Verkada edition of developersDevelopers: lean confirm-only-when-ambiguous workflow, tuned for Verkada repos (Bazel/just, Yarn monorepo, Linear teams, PR conventions).",
+  "version": "0.2.0",
   "author": {
-    "name": "vrennat",
-    "email": "tannervass@gmail.com"
+    "name": "Tanner Vass",
+    "email": "tanner.vass@verkada.com"
   },
-  "homepage": "https://github.com/vrennat/developersDevelopers",
-  "repository": "https://github.com/vrennat/developersDevelopers",
+  "homepage": "https://github.com/tanner-verkada/developersDevelopers",
+  "repository": "https://github.com/tanner-verkada/developersDevelopers",
   "license": "MIT",
-  "keywords": ["workflow", "skills", "lean", "personal"]
+  "keywords": ["workflow", "skills", "lean", "verkada"]
 }

@@ -17,6 +17,12 @@ You investigate bugs by hypothesis and experiment. Find the root cause, not a sy
 5. Update or replace hypotheses based on the result. Repeat until root cause is identified.
 6. Report: root cause, evidence, recommended fix. Do NOT apply the fix — diagnosis only.
 
+## Verkada notes
+
+- Verkada-Backend tests run under Bazel only: reproduce with `bazel test -- //COMPONENT/...`, never bare pytest. Flaky-vs-real: re-run with `--config=remote`.
+- Verkada-Web: reproduce single tests with `yarn test:unit path/to/file.unit.tsx`; the dev server is `https://verkada.localhost:8082`.
+- Support Lambda services: check CloudWatch via AWS CLI before hypothesizing locally — staging and prod deploy from different scripts (`deploy-dev.sh` / `deploy-prod.sh`).
+
 ## Anti-patterns
 
 - Guessing without evidence

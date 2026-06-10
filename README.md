@@ -1,8 +1,19 @@
-# developersDevelopers
+# developersDevelopers — Verkada edition
 
-A workflow plugin for Claude Code. Replaces `obra/superpowers` with a leaner version that doesn't ask you to approve every paragraph it writes.
+A workflow plugin for Claude Code, forked from [vrennat/developersDevelopers](https://github.com/vrennat/developersDevelopers) and tuned for Verkada repos. Same lean confirm-only-when-ambiguous workflow; Verkada-specific verification gates, house rules, and Linear/PR conventions baked into the agents.
 
 If you've used `obra/superpowers` and noticed you say "yes, do that" 19 out of 20 times, this is for you.
+
+## What's Verkada-specific
+
+- **`validator`** knows the per-repo quality gates: `just autofix` + `bazel test` (Verkada-Backend), `yarn check-typescript` + scoped `yarn test:unit` (Verkada-Web), Black 100 + Ruff (Verkada-Support), `terraform plan` (Support-Terraform), SUMMARY.md routing (Verkada-Support-Docs).
+- **`fast-impl`** carries the house rules: match existing patterns, no conditional/lazy Python imports, strict TS with no `any`, minimal diffs, never delete a failing test.
+- **`debug-genius`** reproduces under Bazel (never bare pytest) and checks CloudWatch before local hypotheses for Lambda services.
+- **`brutal-code-reviewer`** blocks on customer data in logs/external services, missing authz on internal endpoints, and inline secrets.
+- **`/impl`** knows "Fixes TEAM-123" vs "Relates to TEAM-123", that pushing a Verkada-Web branch IS a staging deploy, and that Support Bug comments carry critical context.
+- `templates/AGENTS.md` ships pre-filled with the Verkada Linear workspace and support-org team prefixes.
+
+Upstream tracking: `git remote add upstream https://github.com/vrennat/developersDevelopers` is already configured in the working clone; merge upstream periodically.
 
 ## What you get
 
@@ -18,11 +29,18 @@ If you've used `obra/superpowers` and noticed you say "yes, do that" 19 out of 2
 ## Install
 
 ```
-/plugin marketplace add vrennat/developersDevelopers
-/plugin install developersDevelopers@vrennat
+/plugin marketplace add tanner-verkada/developersDevelopers
+/plugin install developersDevelopers-verkada@tanner-verkada
 ```
 
-**Uninstall `obra/superpowers` first** — they collide on slash command names.
+Or, once merged into the Verkada support marketplace:
+
+```
+/plugin marketplace add verkada/verkada-support-skills
+/plugin install developersDevelopers-verkada@verkada-support-skills
+```
+
+**Uninstall `obra/superpowers` first** — they collide on slash command names. The personal `developersDevelopers@vrennat` also collides on command names (`/impl`, `/plan`, ...); install one or the other, not both.
 
 ## First-time setup (per project)
 

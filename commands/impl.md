@@ -32,11 +32,11 @@ Execute work. Input is one of:
 6. **Branch on complexity.**
    - Simple: implement directly in main session.
    - Medium: spawn 1-2 `fast-impl` agents in parallel via the Agent tool. Then dispatch `validator`.
-   - Complex: `TeamCreate` with name like `impl-<slug>`. Decompose into atomic tasks via `TaskCreate` (one per file, with paths and acceptance criteria, plus `blockedBy` dependencies). Spawn `fast-impl` teammates. Monitor via `SendMessage`. On completion: `TeamDelete`, then dispatch `validator`. If change touches >5 files OR security-sensitive code OR shared infrastructure: also dispatch `brutal-code-reviewer`.
+   - Complex: decompose into atomic tasks via `TaskCreate` (one per file/concern, with paths and acceptance criteria, plus `blockedBy` dependencies). Spawn `fast-impl` agents for independent tasks **in parallel in a single message** via the Agent tool; continue a specific agent with `SendMessage` if its task needs iteration. Mark tasks completed via `TaskUpdate` as results land. Then dispatch `validator`. If change touches >5 files OR security-sensitive code OR shared infrastructure: also dispatch `brutal-code-reviewer`. (If agents mutate overlapping files, serialize them or use `isolation: "worktree"` — parallel edits to the same file lose work.)
 
 7. **On `validator` failure:** dispatch `debug-genius` for diagnosis, then `fast-impl` for fix using debug-genius's output. Max 3 retry cycles before surfacing to user.
 
-8. **Before claiming done:** run the project's verification command (typecheck, test, build) and paste its output verbatim. Do not claim done if it fails.
+8. **Before claiming done:** run the project's verification command (typecheck, test, build) and paste its output verbatim. Do not claim done if it fails. In Verkada repos use the gates from the `validator` agent's repo table: `just autofix` + `bazel test` (Verkada-Backend), `yarn check-typescript` + scoped `yarn test:unit` (Verkada-Web), Black/Ruff (Verkada-Support), `terraform plan` (Support-Terraform).
 
 9. **If Linear ticket:** update status to "In Review".
 
@@ -52,6 +52,8 @@ Next: test locally; commit when ready.
 - "Ambiguous" is strict: 2+ real-tradeoff approaches, missing requirement, or multi-cause bug. NOT "I'd like to confirm this." NOT "this is non-trivial." NOT "this touches many files" (that's complexity).
 - Do NOT auto-commit work. Do NOT auto-create PRs. The user decides.
 - The escape hatch from `~/.claude/CLAUDE.md` (destructive git, network side effects, money) always confirms regardless of clarity.
+- Verkada conventions when the user asks for a commit/PR: "Fixes TEAM-123" in the PR body auto-closes the Linear issue, "Relates to TEAM-123" links without closing. In Verkada-Web, pushing a branch auto-deploys to `https://[branch-name].staging.command.verkada.com/` — pushing IS a deploy; name branches accordingly.
+- Support Bug-labeled Linear issues often carry critical context in comments — read them before classifying.
 
 ## Examples
 
@@ -59,4 +61,4 @@ Clear + simple: `/impl "card backs render larger than fronts"` -> classify -> di
 
 Ambiguous + medium: `/impl "add card sorting to hand"` -> ONE batched question (sort by? UI?) -> on answer, spawn 1-2 fast-impl, validator, done.
 
-Clear + complex: `/impl ERT-1234` (refactor rules engine for layered effects, ticket has design) -> TeamCreate, decompose, fast-impl teammates, validator, brutal-code-reviewer (touches >5 files), done.
+Clear + complex: `/impl SUPT-1234` (refactor rules engine for layered effects, ticket has design) -> TaskCreate decomposition, parallel fast-impl agents, validator, brutal-code-reviewer (touches >5 files), done.

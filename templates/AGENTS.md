@@ -4,11 +4,12 @@ This file is read by non-Claude agents (Cursor, Codex). Claude Code reads `CLAUD
 
 ## Issue tracking
 
-This project tracks work in **<TICKET-SYSTEM>** (e.g., Linear workspace `<workspace>`, project `<project>`, prefix `<PREFIX>-`).
+This project tracks work in **Linear** (workspace `verkada`, https://linear.app/verkada). Support-org team prefixes: `SUPT` (Support Systems Engineering), `BETA` (HW Betas), `FIN`/`HMM` (Data & Analytics), `KBA` (KB Articles), `SENA` (Support Enablement). Replace with your team's prefix if different.
 
 **Rules:**
 
-- If your task references a `<PREFIX>-XXXX` ticket, work on that ticket. Do not create a new one.
+- If your task references a `SUPT-XXXX` (or other prefix) ticket, work on that ticket. Do not create a new one.
+- `Support Bug`-labeled issues often have critical context in comments — read them.
 - If you cannot find the ticket, ask. Do not invent a parallel record in another tracker.
 - Comment progress on the ticket itself, not in a side tracker.
 

@@ -57,7 +57,7 @@ Review and run when ready.
 Consider adding to CLAUDE.md:
 
   ## Workflow
-  This project uses developersDevelopers (github.com/vrennat/developersDevelopers).
+  This project uses developersDevelopers-verkada (github.com/tanner-verkada/developersDevelopers).
   - /brainstorm <idea>  -> spec at docs/specs/
   - /impl <input>       -> classified, routed execution
   - /research <q>       -> measurable experiments
@@ -68,7 +68,7 @@ Consider adding to CLAUDE.md:
 ```
 To install hook templates:
 
-  PLUGIN=$(ls -d ~/.claude/plugins/cache/vrennat/developersDevelopers/*/templates 2>/dev/null | sort -V | tail -1)
+  PLUGIN=$(ls -d ~/.claude/plugins/cache/*/developersDevelopers*/*/templates 2>/dev/null | sort -V | tail -1)
   mkdir -p .claude/hooks
   cp "$PLUGIN/hooks/"*.sh .claude/hooks/
   chmod +x .claude/hooks/*.sh

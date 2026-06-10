@@ -10,11 +10,12 @@ Fires when execution produces a real failure: a test error, a stack trace, a non
 ## Procedure
 
 1. State observed vs expected in one sentence each.
-2. Form 1-3 hypotheses ranked by likelihood.
-3. Design the smallest experiment that proves or disproves the top hypothesis (a print, a one-line edit, a focused test).
-4. Run the experiment. Capture the output.
-5. Update or replace hypotheses based on the result. Repeat from step 3 until root cause is identified.
-6. State the root cause and the proposed fix. Hand off to `/impl` or direct implementation.
+2. Before hypothesizing, check what changed: `git diff` + `git log --oneline -5`. Most failures during execution come from the edit just made, not from latent bugs — the diff is hypothesis #1 until ruled out.
+3. Form 1-3 hypotheses ranked by likelihood.
+4. Design the smallest experiment that proves or disproves the top hypothesis (a print, a one-line edit, a focused test).
+5. Run the experiment. Capture the output.
+6. Update or replace hypotheses based on the result. Repeat from step 4 until root cause is identified.
+7. State the root cause and the proposed fix. Hand off to `/impl` or direct implementation.
 
 ## Example
 
